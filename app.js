@@ -53,6 +53,7 @@ $(function() {
                 exercises[idx] = { id: editingId, name: name, sets: sets, reps: reps, weight: weight, date: date };
                 saveExercises(exercises);
                 renderExercises();
+                renderPRs();
                 editingId = null;
                 $('#add-exercise-btn').text('Add Exercise');
             }
@@ -71,6 +72,7 @@ $(function() {
         }
         this.reset();
         $('#exercise-date').val(new Date().toISOString().slice(0, 10));
+        renderPRs();
     });
 
     $('#exercise-tbody').on('click', '.btn-delete', function() {
@@ -78,6 +80,7 @@ $(function() {
         const exercises = getExercises().filter(function(ex) { return ex.id !== id; });
         saveExercises(exercises);
         renderExercises();
+        renderPRs();
     });
 
     $('#exercise-tbody').on('click', '.btn-edit', function() {
@@ -94,7 +97,31 @@ $(function() {
         $('#add-exercise-btn').text('Update Exercise');
     });
 
+    function getPRs() {
+        const exercises = getExercises();
+        const prs = {};
+        exercises.forEach(function(ex) {
+            const key = ex.name.trim().toLowerCase();
+            if (!key) return;
+            const w = parseFloat(ex.weight) || 0;
+            if (!prs[key] || w > prs[key].weight) {
+                prs[key] = { name: ex.name.trim(), weight: w };
+            }
+        });
+        return Object.values(prs).sort(function(a, b) { return b.weight - a.weight; });
+    }
+
+    function renderPRs() {
+        const prs = getPRs();
+        const $list = $('#pr-list');
+        $list.empty();
+        prs.forEach(function(pr) {
+            $list.append('<li><span class="pr-exercise">' + $('<div>').text(pr.name).html() + '</span><span class="pr-weight">' + pr.weight + ' kg</span></li>');
+        });
+    }
+
     renderExercises();
+    renderPRs();
 
     function getPlans() {
         const data = localStorage.getItem(PLANS_STORAGE_KEY);
