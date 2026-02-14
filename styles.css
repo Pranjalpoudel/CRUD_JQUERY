@@ -345,6 +345,45 @@ body {
     font-size: 1rem;
 }
 
+.pr-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pr-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.pr-list li:last-child {
+    border-bottom: none;
+}
+
+.pr-list .pr-exercise {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.pr-list .pr-weight {
+    font-weight: 700;
+    color: var(--primary-btn);
+    font-size: 1.1rem;
+}
+
+.pr-empty {
+    color: #718096;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pr-list:not(:empty) + .pr-empty {
+    display: none;
+}
+
 @media (max-width: 900px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
