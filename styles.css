@@ -71,10 +71,101 @@ body {
     grid-column: 2;
 }
 
+.panel-plans {
+    grid-column: 1 / -1;
+}
+
 .panel-pr,
 .panel-bmi,
 .panel-today {
     grid-column: span 1;
+}
+
+.btn-secondary {
+    background: #718096;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4a5568;
+}
+
+.plan-form .form-group {
+    margin-bottom: 16px;
+}
+
+.plan-exercises-wrap {
+    margin-bottom: 16px;
+}
+
+.plan-exercises-wrap > label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.plan-exercise-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 8px;
+    align-items: end;
+    margin-bottom: 8px;
+}
+
+.plan-exercise-row input {
+    padding: 8px 10px;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+}
+
+.plan-exercise-row .btn-remove {
+    background: var(--danger-btn);
+    color: white;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+}
+
+.plan-exercise-row .btn-remove:hover {
+    background: var(--danger-hover);
+}
+
+.plans-list-wrap {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--panel-border);
+}
+
+.plans-list-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2d3748;
+}
+
+#plans-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#plans-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #f7fafc;
+}
+
+#plans-list .plan-item-name {
+    font-weight: 500;
+}
+
+#plans-list .plan-item-actions button {
+    margin-left: 6px;
 }
 
 .panel-header {
@@ -196,6 +287,11 @@ body {
 
 .btn-delete:hover {
     background: var(--danger-hover);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
 }
 
 @media (max-width: 900px) {
