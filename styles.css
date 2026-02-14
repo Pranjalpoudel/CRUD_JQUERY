@@ -139,6 +139,65 @@ body {
     background: var(--primary-hover);
 }
 
+.panel-header-secondary {
+    background: #4a5568;
+    font-size: 0.95rem;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.exercise-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.exercise-table th,
+.exercise-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.exercise-table th {
+    background: #edf2f7;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+.exercise-table tbody tr:hover {
+    background: #f7fafc;
+}
+
+.exercise-table .actions-cell {
+    white-space: nowrap;
+}
+
+.btn-edit {
+    background: var(--primary-btn);
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    margin-right: 6px;
+}
+
+.btn-edit:hover {
+    background: var(--primary-hover);
+}
+
+.btn-delete {
+    background: var(--danger-btn);
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+.btn-delete:hover {
+    background: var(--danger-hover);
+}
+
 @media (max-width: 900px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
