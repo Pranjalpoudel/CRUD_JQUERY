@@ -63,6 +63,28 @@
             </section>
             <section class="panel panel-chart" id="chart-panel">
             </section>
+            <section class="panel panel-plans" id="plans-panel">
+                <div class="panel-header">Workout Plans</div>
+                <div class="panel-body">
+                    <form id="plan-form" class="plan-form">
+                        <div class="form-group">
+                            <label for="plan-name">Plan Name</label>
+                            <input type="text" id="plan-name" required placeholder="e.g. Push Day">
+                        </div>
+                        <div class="plan-exercises-wrap">
+                            <label>Exercises</label>
+                            <div id="plan-exercises-list"></div>
+                            <button type="button" class="btn btn-secondary" id="add-plan-exercise">+ Add Exercise</button>
+                        </div>
+                        <input type="hidden" id="plan-edit-id" value="">
+                        <button type="submit" class="btn btn-primary" id="save-plan-btn">Save Plan</button>
+                    </form>
+                    <div class="plans-list-wrap">
+                        <label class="plans-list-label">Saved Plans</label>
+                        <ul id="plans-list"></ul>
+                    </div>
+                </div>
+            </section>
             <section class="panel panel-pr" id="pr-panel">
             </section>
             <section class="panel panel-bmi" id="bmi-panel">

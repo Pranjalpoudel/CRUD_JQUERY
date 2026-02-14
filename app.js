@@ -3,6 +3,7 @@ $(function() {
     'use strict';
 
     const STORAGE_KEY = 'gym-workout-exercises';
+    const PLANS_STORAGE_KEY = 'gym-workout-plans';
 
     function getExercises() {
         const data = localStorage.getItem(STORAGE_KEY);
@@ -93,4 +94,116 @@ $(function() {
     });
 
     renderExercises();
+
+    function getPlans() {
+        const data = localStorage.getItem(PLANS_STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+    }
+
+    function savePlans(plans) {
+        localStorage.setItem(PLANS_STORAGE_KEY, JSON.stringify(plans));
+    }
+
+    function createPlanExerciseRow() {
+        const row = $('<div class="plan-exercise-row"></div>');
+        row.append($('<input type="text" placeholder="Exercise name">'));
+        row.append($('<input type="number" placeholder="Sets" min="1">'));
+        row.append($('<input type="number" placeholder="Reps" min="1">'));
+        row.append($('<input type="number" placeholder="Weight" min="0" step="0.5">'));
+        row.append($('<button type="button" class="btn btn-remove">Remove</button>'));
+        row.find('.btn-remove').on('click', function() { row.remove(); });
+        return row;
+    }
+
+    function getPlanFormData() {
+        const exercises = [];
+        $('#plan-exercises-list .plan-exercise-row').each(function() {
+            const $r = $(this);
+            const name = $r.find('input').eq(0).val().trim();
+            const sets = parseInt($r.find('input').eq(1).val(), 10) || 0;
+            const reps = parseInt($r.find('input').eq(2).val(), 10) || 0;
+            const weight = parseFloat($r.find('input').eq(3).val()) || 0;
+            if (name) exercises.push({ name: name, sets: sets, reps: reps, weight: weight });
+        });
+        return exercises;
+    }
+
+    function resetPlanForm() {
+        $('#plan-name').val('');
+        $('#plan-edit-id').val('');
+        $('#plan-exercises-list').empty();
+        $('#save-plan-btn').text('Save Plan');
+    }
+
+    function renderPlansList() {
+        const plans = getPlans();
+        const $list = $('#plans-list');
+        $list.empty();
+        plans.forEach(function(p) {
+            const exCount = p.exercises ? p.exercises.length : 0;
+            const li = $('<li></li>');
+            li.append('<span class="plan-item-name">' + $('<div>').text(p.name).html() + ' (' + exCount + ' exercises)</span>');
+            const actions = $('<span class="plan-item-actions"></span>');
+            actions.append('<button type="button" class="btn btn-edit btn-sm plan-edit" data-id="' + p.id + '">Edit</button>');
+            actions.append('<button type="button" class="btn btn-delete btn-sm plan-delete" data-id="' + p.id + '">Delete</button>');
+            li.append(actions);
+            $list.append(li);
+        });
+    }
+
+    $('#add-plan-exercise').on('click', function() {
+        $('#plan-exercises-list').append(createPlanExerciseRow());
+    });
+
+    $('#plan-form').on('submit', function(e) {
+        e.preventDefault();
+        const name = $('#plan-name').val().trim();
+        const exercises = getPlanFormData();
+        const editId = $('#plan-edit-id').val();
+        const plans = getPlans();
+
+        if (editId) {
+            const idx = plans.findIndex(function(p) { return p.id === editId; });
+            if (idx !== -1) {
+                plans[idx] = { id: editId, name: name, exercises: exercises };
+                savePlans(plans);
+                renderPlansList();
+                resetPlanForm();
+            }
+        } else {
+            plans.push({ id: Date.now().toString(), name: name, exercises: exercises });
+            savePlans(plans);
+            renderPlansList();
+            resetPlanForm();
+        }
+    });
+
+    $('#plans-list').on('click', '.plan-delete', function() {
+        const id = $(this).data('id');
+        const plans = getPlans().filter(function(p) { return p.id !== id; });
+        savePlans(plans);
+        renderPlansList();
+        if ($('#plan-edit-id').val() === id) resetPlanForm();
+    });
+
+    $('#plans-list').on('click', '.plan-edit', function() {
+        const id = $(this).data('id');
+        const plans = getPlans();
+        const plan = plans.find(function(p) { return p.id === id; });
+        if (!plan) return;
+        $('#plan-name').val(plan.name);
+        $('#plan-edit-id').val(plan.id);
+        $('#plan-exercises-list').empty();
+        (plan.exercises || []).forEach(function(ex) {
+            const row = createPlanExerciseRow();
+            row.find('input').eq(0).val(ex.name);
+            row.find('input').eq(1).val(ex.sets);
+            row.find('input').eq(2).val(ex.reps);
+            row.find('input').eq(3).val(ex.weight);
+            $('#plan-exercises-list').append(row);
+        });
+        $('#save-plan-btn').text('Update Plan');
+    });
+
+    renderPlansList();
 });
