@@ -17,14 +17,14 @@ body {
 }
 
 .app-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 16px;
 }
 
 .app-title {
-    margin: 0 0 24px 0;
-    font-size: 2rem;
+    margin: 0 0 16px 0;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #1a365d;
 }
@@ -45,14 +45,14 @@ body {
 
 
 .main-header {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
-    gap: 20px;
+    gap: 12px;
 }
 
 .panel {
@@ -72,25 +72,58 @@ body {
 }
 
 .chart-title {
-    margin: 0 0 16px 0;
-    font-size: 1rem;
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #2d3748;
 }
 
 .chart-wrap {
     position: relative;
-    height: 280px;
+    height: 200px;
+}
+
+.chart-bmi-wrap {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--panel-border);
+}
+
+.bmi-section-title {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.bmi-form-inline .form-row {
+    grid-template-columns: 1fr 1fr;
+}
+
+.bmi-form-inline .form-group {
+    margin-bottom: 8px;
+}
+
+.chart-bmi-wrap .bmi-result {
+    margin-top: 8px;
+    padding: 10px;
 }
 
 .panel-plans {
     grid-column: 1 / -1;
 }
 
-.panel-pr,
-.panel-bmi,
+.panel-plans .panel-body {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.panel-pr {
+    grid-column: 1;
+}
+
 .panel-today {
-    grid-column: span 1;
+    grid-column: 2;
 }
 
 .btn-secondary {
@@ -103,11 +136,11 @@ body {
 }
 
 .plan-form .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .plan-exercises-wrap {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .plan-exercises-wrap > label {
@@ -143,15 +176,16 @@ body {
 }
 
 .plans-list-wrap {
-    margin-top: 24px;
-    padding-top: 20px;
+    margin-top: 16px;
+    padding-top: 12px;
     border-top: 1px solid var(--panel-border);
 }
 
 .plans-list-label {
     display: block;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
     color: #2d3748;
 }
 
@@ -165,10 +199,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 12px;
+    padding: 8px 10px;
     border: 1px solid var(--panel-border);
     border-radius: 6px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     background: #f7fafc;
 }
 
@@ -183,33 +217,33 @@ body {
 .panel-header {
     background: var(--header-bg);
     color: var(--header-text);
-    padding: 12px 16px;
+    padding: 8px 12px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .panel-body {
-    padding: 20px;
+    padding: 12px;
 }
 
 .exercise-form .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .exercise-form label {
     display: block;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
     font-weight: 500;
     color: #4a5568;
 }
 
 .exercise-form input {
     width: 100%;
-    padding: 10px 12px;
+    padding: 8px 10px;
     border: 1px solid var(--panel-border);
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .exercise-form input:focus {
@@ -221,11 +255,11 @@ body {
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
 }
 
 .btn {
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 6px;
     font-size: 1rem;
@@ -253,11 +287,12 @@ body {
 
 .panel-header-secondary {
     background: #4a5568;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .table-wrap {
-    overflow-x: auto;
+    overflow: auto;
+    max-height: 200px;
 }
 
 .exercise-table {
@@ -267,16 +302,17 @@ body {
 
 .exercise-table th,
 .exercise-table td {
-    padding: 12px;
+    padding: 8px 10px;
     text-align: left;
     border-bottom: 1px solid var(--panel-border);
+    font-size: 0.9rem;
 }
 
 .exercise-table th {
     background: #edf2f7;
     font-weight: 600;
     color: #2d3748;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .exercise-table tbody tr:hover {
@@ -290,8 +326,8 @@ body {
 .btn-edit {
     background: var(--primary-btn);
     color: white;
-    padding: 6px 12px;
-    font-size: 0.875rem;
+    padding: 5px 10px;
+    font-size: 0.8rem;
     margin-right: 6px;
 }
 
@@ -302,8 +338,8 @@ body {
 .btn-delete {
     background: var(--danger-btn);
     color: white;
-    padding: 6px 12px;
-    font-size: 0.875rem;
+    padding: 5px 10px;
+    font-size: 0.8rem;
 }
 
 .btn-delete:hover {
@@ -317,16 +353,16 @@ body {
 
 .today-workout-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-    margin-top: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .workout-card {
     background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
     border: 1px solid var(--panel-border);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 6px;
+    padding: 10px;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -343,24 +379,24 @@ body {
 
 .workout-card-title {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #2d3748;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .workout-card-details {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #4a5568;
 }
 
 .workout-card-icon {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    font-size: 1.25rem;
+    margin-bottom: 4px;
 }
 
 #today-plan-select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 8px 10px;
     border: 1px solid var(--panel-border);
     border-radius: 6px;
     font-size: 1rem;
@@ -376,7 +412,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 6px 0;
     border-bottom: 1px solid var(--panel-border);
 }
 
@@ -392,7 +428,7 @@ body {
 .pr-list .pr-weight {
     font-weight: 700;
     color: var(--primary-btn);
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .pr-empty {
@@ -406,14 +442,14 @@ body {
 }
 
 .bmi-form .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .bmi-result {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -447,7 +483,9 @@ body {
         grid-template-columns: 1fr;
     }
     .panel-tracker,
-    .panel-chart {
+    .panel-chart,
+    .panel-pr,
+    .panel-today {
         grid-column: 1;
     }
 }
