@@ -279,4 +279,27 @@ $(function() {
 
     renderTodayPlanSelect();
     renderTodayWorkout();
+
+    function getBMIClassification(bmi) {
+        if (bmi < 18.5) return { label: 'Underweight', cls: 'underweight' };
+        if (bmi < 25) return { label: 'Normal', cls: 'normal' };
+        if (bmi < 30) return { label: 'Overweight', cls: 'overweight' };
+        return { label: 'Obese', cls: 'obese' };
+    }
+
+    $('#bmi-form').on('submit', function(e) {
+        e.preventDefault();
+        const height = parseFloat($('#bmi-height').val()) || 0;
+        const weight = parseFloat($('#bmi-weight').val()) || 0;
+        const $result = $('#bmi-result');
+        if (height <= 0 || weight <= 0) {
+            $result.removeClass('normal underweight overweight obese').addClass('error').text('Enter valid height and weight.');
+            return;
+        }
+        const heightM = height / 100;
+        const bmi = weight / (heightM * heightM);
+        const info = getBMIClassification(bmi);
+        $result.removeClass('normal underweight overweight obese error').addClass(info.cls)
+            .text('Your BMI: ' + bmi.toFixed(1) + ' (' + info.label + ')');
+    });
 });

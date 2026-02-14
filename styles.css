@@ -230,6 +230,15 @@ body {
     background: var(--primary-hover);
 }
 
+.btn-success {
+    background: var(--success-btn);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--success-hover);
+}
+
 .panel-header-secondary {
     background: #4a5568;
     font-size: 0.95rem;
@@ -382,6 +391,43 @@ body {
 
 .pr-list:not(:empty) + .pr-empty {
     display: none;
+}
+
+.bmi-form .form-group {
+    margin-bottom: 16px;
+}
+
+.bmi-result {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.bmi-result.normal {
+    background: #c6f6d5;
+    color: #276749;
+}
+
+.bmi-result.underweight {
+    background: #bee3f8;
+    color: #2c5282;
+}
+
+.bmi-result.overweight {
+    background: #feebc8;
+    color: #c05621;
+}
+
+.bmi-result.obese {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.bmi-result.error {
+    background: #e2e8f0;
+    color: #4a5568;
 }
 
 @media (max-width: 900px) {
