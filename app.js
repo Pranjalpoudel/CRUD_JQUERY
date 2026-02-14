@@ -54,6 +54,7 @@ $(function() {
                 saveExercises(exercises);
                 renderExercises();
                 renderPRs();
+                renderProgressChart();
                 editingId = null;
                 $('#add-exercise-btn').text('Add Exercise');
             }
@@ -73,6 +74,7 @@ $(function() {
         this.reset();
         $('#exercise-date').val(new Date().toISOString().slice(0, 10));
         renderPRs();
+        renderProgressChart();
     });
 
     $('#exercise-tbody').on('click', '.btn-delete', function() {
@@ -81,6 +83,7 @@ $(function() {
         saveExercises(exercises);
         renderExercises();
         renderPRs();
+        renderProgressChart();
     });
 
     $('#exercise-tbody').on('click', '.btn-edit', function() {
@@ -120,8 +123,70 @@ $(function() {
         });
     }
 
+    let progressChart = null;
+
+    function getChartData() {
+        const exercises = getExercises();
+        const byKey = {};
+        exercises.forEach(function(ex) {
+            const key = ex.name.trim().toLowerCase();
+            if (!key) return;
+            const displayName = ex.name.trim();
+            if (!byKey[key]) byKey[key] = { name: displayName, points: [] };
+            byKey[key].points.push({ date: ex.date, weight: parseFloat(ex.weight) || 0 });
+        });
+        Object.keys(byKey).forEach(function(k) {
+            byKey[k].points.sort(function(a, b) { return a.date.localeCompare(b.date); });
+        });
+        return byKey;
+    }
+
+    function renderProgressChart() {
+        const data = getChartData();
+        const colors = ['#3182ce', '#dd6b20', '#38a169', '#805ad5', '#e53e3e'];
+        const datasets = [];
+        let idx = 0;
+        Object.keys(data).forEach(function(key) {
+            const points = data[key].points.map(function(p) { return { x: p.date, y: p.weight }; });
+            datasets.push({
+                label: data[key].name,
+                data: points,
+                borderColor: colors[idx % colors.length],
+                backgroundColor: 'transparent',
+                fill: false,
+                tension: 0.2
+            });
+            idx++;
+        });
+        const ctx = document.getElementById('progress-chart');
+        if (!ctx) return;
+        if (progressChart) progressChart.destroy();
+        progressChart = new Chart(ctx, {
+            type: 'line',
+            data: { datasets: datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: { display: true, text: 'Date' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Weight (kg)' }
+                    }
+                }
+            }
+        });
+    }
+
     renderExercises();
     renderPRs();
+    renderProgressChart();
 
     function getPlans() {
         const data = localStorage.getItem(PLANS_STORAGE_KEY);

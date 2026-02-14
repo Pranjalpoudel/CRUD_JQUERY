@@ -71,6 +71,18 @@ body {
     grid-column: 2;
 }
 
+.chart-title {
+    margin: 0 0 16px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 280px;
+}
+
 .panel-plans {
     grid-column: 1 / -1;
 }
