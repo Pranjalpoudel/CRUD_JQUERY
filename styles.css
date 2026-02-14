@@ -294,6 +294,57 @@ body {
     font-size: 0.8rem;
 }
 
+.today-workout-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.workout-card {
+    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.workout-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.workout-card.active {
+    border-color: var(--primary-btn);
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.3);
+}
+
+.workout-card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.workout-card-details {
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.workout-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+#today-plan-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
 @media (max-width: 900px) {
     .dashboard-grid {
         grid-template-columns: 1fr;

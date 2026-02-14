@@ -4,6 +4,7 @@ $(function() {
 
     const STORAGE_KEY = 'gym-workout-exercises';
     const PLANS_STORAGE_KEY = 'gym-workout-plans';
+    const TODAY_PLAN_KEY = 'gym-today-plan';
 
     function getExercises() {
         const data = localStorage.getItem(STORAGE_KEY);
@@ -168,12 +169,16 @@ $(function() {
                 plans[idx] = { id: editId, name: name, exercises: exercises };
                 savePlans(plans);
                 renderPlansList();
+                renderTodayPlanSelect();
+                renderTodayWorkout();
                 resetPlanForm();
             }
         } else {
             plans.push({ id: Date.now().toString(), name: name, exercises: exercises });
             savePlans(plans);
             renderPlansList();
+            renderTodayPlanSelect();
+            renderTodayWorkout();
             resetPlanForm();
         }
     });
@@ -183,6 +188,8 @@ $(function() {
         const plans = getPlans().filter(function(p) { return p.id !== id; });
         savePlans(plans);
         renderPlansList();
+        renderTodayPlanSelect();
+        renderTodayWorkout();
         if ($('#plan-edit-id').val() === id) resetPlanForm();
     });
 
@@ -206,4 +213,43 @@ $(function() {
     });
 
     renderPlansList();
+
+    function renderTodayPlanSelect() {
+        const plans = getPlans();
+        const selected = localStorage.getItem(TODAY_PLAN_KEY) || '';
+        const $select = $('#today-plan-select');
+        $select.find('option').not(':first').remove();
+        plans.forEach(function(p) {
+            $select.append($('<option></option>').val(p.id).text(p.name).prop('selected', p.id === selected));
+        });
+        if (selected) $select.val(selected);
+    }
+
+    function renderTodayWorkout() {
+        const planId = $('#today-plan-select').val() || localStorage.getItem(TODAY_PLAN_KEY);
+        const $cards = $('#today-workout-cards');
+        $cards.empty();
+        if (!planId) return;
+        const plans = getPlans();
+        const plan = plans.find(function(p) { return p.id === planId; });
+        if (!plan || !plan.exercises || plan.exercises.length === 0) return;
+        plan.exercises.forEach(function(ex, i) {
+            const details = ex.sets + ' Sets x ' + ex.reps + ' Reps @ ' + ex.weight + ' kg';
+            const card = $('<div class="workout-card"></div>');
+            card.append('<div class="workout-card-icon">🏋️</div>');
+            card.append('<div class="workout-card-title">' + $('<div>').text(ex.name).html() + '</div>');
+            card.append('<div class="workout-card-details">' + details + '</div>');
+            if (i === 0) card.addClass('active');
+            $cards.append(card);
+        });
+    }
+
+    $('#today-plan-select').on('change', function() {
+        const val = $(this).val();
+        localStorage.setItem(TODAY_PLAN_KEY, val || '');
+        renderTodayWorkout();
+    });
+
+    renderTodayPlanSelect();
+    renderTodayWorkout();
 });
