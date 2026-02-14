@@ -3,6 +3,27 @@ $(function() {
     'use strict';
 
     const STORAGE_KEY = 'gym-workout-exercises';
+    const THEME_KEY = 'gym-theme';
+
+    function initTheme() {
+        const saved = localStorage.getItem(THEME_KEY);
+        const isDark = saved === null ? true : saved === 'dark';
+        $('#theme-toggle-checkbox').prop('checked', isDark);
+        $('body').removeClass('dark-theme light-theme').addClass(isDark ? 'dark-theme' : 'light-theme');
+    }
+
+    function setTheme(isDark) {
+        localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+        $('body').removeClass('dark-theme light-theme').addClass(isDark ? 'dark-theme' : 'light-theme');
+    }
+
+    initTheme();
+
+    $('#theme-toggle-checkbox').on('change', function() {
+        setTheme($(this).prop('checked'));
+        if (progressChart) renderProgressChart();
+    });
+
     const PLANS_STORAGE_KEY = 'gym-workout-plans';
     const TODAY_PLAN_KEY = 'gym-today-plan';
 
@@ -143,7 +164,9 @@ $(function() {
 
     function renderProgressChart() {
         const data = getChartData();
-        const colors = ['#3182ce', '#dd6b20', '#38a169', '#805ad5', '#e53e3e'];
+        const isDark = $('body').hasClass('dark-theme');
+        const scaleColor = isDark ? 'rgba(226, 232, 240, 0.8)' : 'rgba(45, 55, 72, 0.8)';
+        const colors = ['#4299e1', '#ed8936', '#48bb78', '#9f7aea', '#fc8181'];
         const datasets = [];
         let idx = 0;
         Object.keys(data).forEach(function(key) {
@@ -168,16 +191,20 @@ $(function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom' }
+                    legend: { position: 'bottom', labels: { color: scaleColor } }
                 },
                 scales: {
                     x: {
                         type: 'category',
-                        title: { display: true, text: 'Date' }
+                        ticks: { color: scaleColor },
+                        grid: { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' },
+                        title: { display: true, text: 'Date', color: scaleColor }
                     },
                     y: {
                         beginAtZero: true,
-                        title: { display: true, text: 'Weight (kg)' }
+                        ticks: { color: scaleColor },
+                        grid: { color: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' },
+                        title: { display: true, text: 'Weight (kg)', color: scaleColor }
                     }
                 }
             }

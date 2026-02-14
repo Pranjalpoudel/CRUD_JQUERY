@@ -6,10 +6,14 @@
     <title>Gym Workout Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="dark-theme">
     <div class="app-container">
         <header class="main-header">
             <h1 class="app-title">Gym Workout Tracker</h1>
+            <label class="theme-toggle">
+                <input type="checkbox" id="theme-toggle-checkbox" checked aria-label="Toggle dark mode">
+                <span class="theme-toggle-slider"></span>
+            </label>
         </header>
         <main class="dashboard-grid">
             <section class="panel panel-tracker" id="tracker-panel">
@@ -70,6 +74,7 @@
                     </div>
                     <div class="chart-bmi-wrap">
                         <h4 class="bmi-section-title">BMI Calculator</h4>
+                        <div class="bmi-form-box">
                         <form id="bmi-form" class="bmi-form bmi-form-inline">
                             <div class="form-row">
                                 <div class="form-group">
@@ -83,6 +88,7 @@
                             </div>
                             <button type="submit" class="btn btn-success" id="bmi-calculate-btn">Calculate BMI</button>
                         </form>
+                        </div>
                         <div id="bmi-result" class="bmi-result"></div>
                     </div>
                 </div>

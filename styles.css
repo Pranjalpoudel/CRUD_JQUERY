@@ -1,19 +1,70 @@
 /* Gym Workout Tracker - Styles */
 
-
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
+/* Light theme */
+:root,
+body.light-theme {
+    --body-bg: #f0f2f5;
+    --body-text: #333;
+    --title-color: #1a365d;
+    --header-bg: #2c5282;
+    --header-text: #ffffff;
+    --panel-bg: #ffffff;
+    --panel-border: #e2e8f0;
+    --panel-text: #333;
+    --label-color: #4a5568;
+    --input-bg: #ffffff;
+    --input-border: #e2e8f0;
+    --primary-btn: #3182ce;
+    --primary-hover: #2c5282;
+    --danger-btn: #e53e3e;
+    --danger-hover: #c53030;
+    --success-btn: #38a169;
+    --success-hover: #2f855a;
+    --table-header-bg: #edf2f7;
+    --table-hover-bg: #f7fafc;
+    --card-bg: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    --plans-item-bg: #f7fafc;
+}
+
+/* Dark theme (default) */
+body.dark-theme {
+    --body-bg: #1a202c;
+    --body-text: #e2e8f0;
+    --title-color: #90cdf4;
+    --header-bg: #2d3748;
+    --header-text: #e2e8f0;
+    --panel-bg: #2d3748;
+    --panel-border: #4a5568;
+    --panel-text: #e2e8f0;
+    --label-color: #a0aec0;
+    --input-bg: #1a202c;
+    --input-border: #4a5568;
+    --primary-btn: #4299e1;
+    --primary-hover: #3182ce;
+    --danger-btn: #fc8181;
+    --danger-hover: #e53e3e;
+    --success-btn: #48bb78;
+    --success-hover: #38a169;
+    --table-header-bg: #374151;
+    --table-hover-bg: #374151;
+    --card-bg: linear-gradient(135deg, #374151 0%, #4a5568 100%);
+    --plans-item-bg: #374151;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--body-bg);
+    color: var(--body-text);
     min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .app-container {
@@ -22,25 +73,61 @@ body {
     padding: 16px;
 }
 
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
 .app-title {
     margin: 0 0 16px 0;
     font-size: 1.75rem;
     font-weight: 700;
-    color: #1a365d;
+    color: var(--title-color);
 }
 
-/* Color scheme */
-:root {
-    --header-bg: #2c5282;
-    --header-text: #ffffff;
-    --panel-bg: #ffffff;
-    --panel-border: #e2e8f0;
-    --primary-btn: #3182ce;
-    --primary-hover: #2c5282;
-    --danger-btn: #e53e3e;
-    --danger-hover: #c53030;
-    --success-btn: #38a169;
-    --success-hover: #2f855a;
+/* Theme toggle */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-slider {
+    position: absolute;
+    inset: 0;
+    background-color: #4a5568;
+    border-radius: 28px;
+    transition: 0.3s;
+}
+
+.theme-toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.theme-toggle input:checked + .theme-toggle-slider {
+    background-color: #4299e1;
+}
+
+.theme-toggle input:checked + .theme-toggle-slider::before {
+    transform: translateX(24px);
 }
 
 
@@ -60,7 +147,8 @@ body {
     border: 1px solid var(--panel-border);
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .panel-tracker {
@@ -75,7 +163,7 @@ body {
     margin: 0 0 8px 0;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #2d3748;
+    color: var(--panel-text);
 }
 
 .chart-wrap {
@@ -85,15 +173,21 @@ body {
 
 .chart-bmi-wrap {
     margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--panel-border);
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--input-bg);
+    border: 1px solid var(--panel-border);
+}
+
+.bmi-form-box {
+    margin-bottom: 10px;
 }
 
 .bmi-section-title {
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #2d3748;
+    color: var(--label-color);
 }
 
 .bmi-form-inline .form-row {
@@ -105,8 +199,22 @@ body {
 }
 
 .chart-bmi-wrap .bmi-result {
-    margin-top: 8px;
-    padding: 10px;
+    margin-top: 0;
+    padding: 12px;
+    border-radius: 6px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.bmi-result:empty {
+    background: rgba(160, 174, 192, 0.15);
+    color: var(--label-color);
+    font-weight: 500;
+}
+
+body.dark-theme .bmi-result:empty {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .panel-plans {
@@ -147,7 +255,7 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: #4a5568;
+    color: var(--label-color);
 }
 
 .plan-exercise-row {
@@ -160,8 +268,10 @@ body {
 
 .plan-exercise-row input {
     padding: 8px 10px;
-    border: 1px solid var(--panel-border);
+    border: 1px solid var(--input-border);
     border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--panel-text);
 }
 
 .plan-exercise-row .btn-remove {
@@ -186,7 +296,7 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 0.9rem;
-    color: #2d3748;
+    color: var(--panel-text);
 }
 
 #plans-list {
@@ -203,7 +313,7 @@ body {
     border: 1px solid var(--panel-border);
     border-radius: 6px;
     margin-bottom: 6px;
-    background: #f7fafc;
+    background: var(--plans-item-bg);
 }
 
 #plans-list .plan-item-name {
@@ -235,15 +345,17 @@ body {
     margin-bottom: 4px;
     font-size: 0.85rem;
     font-weight: 500;
-    color: #4a5568;
+    color: var(--label-color);
 }
 
 .exercise-form input {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid var(--panel-border);
+    border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 0.95rem;
+    background: var(--input-bg);
+    color: var(--panel-text);
 }
 
 .exercise-form input:focus {
@@ -309,14 +421,14 @@ body {
 }
 
 .exercise-table th {
-    background: #edf2f7;
+    background: var(--table-header-bg);
     font-weight: 600;
-    color: #2d3748;
+    color: var(--panel-text);
     font-size: 0.85rem;
 }
 
 .exercise-table tbody tr:hover {
-    background: #f7fafc;
+    background: var(--table-hover-bg);
 }
 
 .exercise-table .actions-cell {
@@ -359,7 +471,7 @@ body {
 }
 
 .workout-card {
-    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    background: var(--card-bg);
     border: 1px solid var(--panel-border);
     border-radius: 6px;
     padding: 10px;
@@ -380,13 +492,13 @@ body {
 .workout-card-title {
     font-weight: 700;
     font-size: 0.9rem;
-    color: #2d3748;
+    color: var(--panel-text);
     margin-bottom: 4px;
 }
 
 .workout-card-details {
     font-size: 0.8rem;
-    color: #4a5568;
+    color: var(--label-color);
 }
 
 .workout-card-icon {
@@ -397,9 +509,11 @@ body {
 #today-plan-select {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid var(--panel-border);
+    border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--panel-text);
 }
 
 .pr-list {
@@ -422,7 +536,7 @@ body {
 
 .pr-list .pr-exercise {
     font-weight: 600;
-    color: #2d3748;
+    color: var(--panel-text);
 }
 
 .pr-list .pr-weight {
@@ -432,7 +546,7 @@ body {
 }
 
 .pr-empty {
-    color: #718096;
+    color: var(--label-color);
     font-size: 0.9rem;
     margin: 0;
 }
@@ -454,26 +568,51 @@ body {
 }
 
 .bmi-result.normal {
+    background: rgba(72, 187, 120, 0.25);
+    color: #48bb78;
+}
+
+body.light-theme .bmi-result.normal {
     background: #c6f6d5;
     color: #276749;
 }
 
 .bmi-result.underweight {
+    background: rgba(66, 153, 225, 0.25);
+    color: #63b3ed;
+}
+
+body.light-theme .bmi-result.underweight {
     background: #bee3f8;
     color: #2c5282;
 }
 
 .bmi-result.overweight {
+    background: rgba(237, 137, 54, 0.25);
+    color: #ed8936;
+}
+
+body.light-theme .bmi-result.overweight {
     background: #feebc8;
     color: #c05621;
 }
 
 .bmi-result.obese {
+    background: rgba(245, 101, 101, 0.25);
+    color: #fc8181;
+}
+
+body.light-theme .bmi-result.obese {
     background: #fed7d7;
     color: #c53030;
 }
 
 .bmi-result.error {
+    background: rgba(160, 174, 192, 0.2);
+    color: var(--label-color);
+}
+
+body.light-theme .bmi-result.error {
     background: #e2e8f0;
     color: #4a5568;
 }
