@@ -1,2 +1,88 @@
 /* Gym Workout Tracker - Styles */
-/* Base styles will be added in subsequent commits */
+
+/* Commit 2: Base CSS - Reset, layout, color scheme */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    min-height: 100vh;
+}
+
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.app-title {
+    margin: 0 0 24px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a365d;
+}
+
+/* Color scheme */
+:root {
+    --header-bg: #2c5282;
+    --header-text: #ffffff;
+    --panel-bg: #ffffff;
+    --panel-border: #e2e8f0;
+    --primary-btn: #3182ce;
+    --primary-hover: #2c5282;
+    --danger-btn: #e53e3e;
+    --danger-hover: #c53030;
+    --success-btn: #38a169;
+    --success-hover: #2f855a;
+}
+
+/* Commit 3: Header + main grid layout */
+.main-header {
+    margin-bottom: 24px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.panel-tracker {
+    grid-column: 1;
+}
+
+.panel-chart {
+    grid-column: 2;
+}
+
+.panel-pr,
+.panel-bmi,
+.panel-today {
+    grid-column: span 1;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .panel-tracker,
+    .panel-chart {
+        grid-column: 1;
+    }
+}
