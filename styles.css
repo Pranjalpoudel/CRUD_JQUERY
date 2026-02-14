@@ -1,6 +1,6 @@
 /* Gym Workout Tracker - Styles */
 
-/* Commit 2: Base CSS - Reset, layout, color scheme */
+
 *,
 *::before,
 *::after {
@@ -43,7 +43,7 @@ body {
     --success-hover: #2f855a;
 }
 
-/* Commit 3: Header + main grid layout */
+
 .main-header {
     margin-bottom: 24px;
 }
@@ -75,6 +75,68 @@ body {
 .panel-bmi,
 .panel-today {
     grid-column: span 1;
+}
+
+.panel-header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.panel-body {
+    padding: 20px;
+}
+
+.exercise-form .form-group {
+    margin-bottom: 16px;
+}
+
+.exercise-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.exercise-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.exercise-form input:focus {
+    outline: none;
+    border-color: var(--primary-btn);
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-btn);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
 }
 
 @media (max-width: 900px) {

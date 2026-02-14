@@ -1,5 +1,5 @@
 /* Gym Workout Tracker - jQuery Application */
 $(function() {
     'use strict';
-    // App logic will be added in subsequent commits
+    $('#exercise-date').val(new Date().toISOString().slice(0, 10));
 });
