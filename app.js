@@ -34,22 +34,62 @@ $(function() {
 
     $('#exercise-date').val(new Date().toISOString().slice(0, 10));
 
+    let editingId = null;
+
     $('#exercise-form').on('submit', function(e) {
         e.preventDefault();
         const exercises = getExercises();
-        const newExercise = {
-            id: Date.now().toString(),
-            name: $('#exercise-name').val().trim(),
-            sets: parseInt($('#exercise-sets').val(), 10),
-            reps: parseInt($('#exercise-reps').val(), 10),
-            weight: parseFloat($('#exercise-weight').val()) || 0,
-            date: $('#exercise-date').val()
-        };
-        exercises.push(newExercise);
-        saveExercises(exercises);
-        renderExercises();
+        const name = $('#exercise-name').val().trim();
+        const sets = parseInt($('#exercise-sets').val(), 10);
+        const reps = parseInt($('#exercise-reps').val(), 10);
+        const weight = parseFloat($('#exercise-weight').val()) || 0;
+        const date = $('#exercise-date').val();
+
+        if (editingId) {
+            const idx = exercises.findIndex(function(ex) { return ex.id === editingId; });
+            if (idx !== -1) {
+                exercises[idx] = { id: editingId, name: name, sets: sets, reps: reps, weight: weight, date: date };
+                saveExercises(exercises);
+                renderExercises();
+                editingId = null;
+                $('#add-exercise-btn').text('Add Exercise');
+            }
+        } else {
+            const newExercise = {
+                id: Date.now().toString(),
+                name: name,
+                sets: sets,
+                reps: reps,
+                weight: weight,
+                date: date
+            };
+            exercises.push(newExercise);
+            saveExercises(exercises);
+            renderExercises();
+        }
         this.reset();
         $('#exercise-date').val(new Date().toISOString().slice(0, 10));
+    });
+
+    $('#exercise-tbody').on('click', '.btn-delete', function() {
+        const id = $(this).closest('tr').data('id');
+        const exercises = getExercises().filter(function(ex) { return ex.id !== id; });
+        saveExercises(exercises);
+        renderExercises();
+    });
+
+    $('#exercise-tbody').on('click', '.btn-edit', function() {
+        const id = $(this).closest('tr').data('id');
+        const exercises = getExercises();
+        const ex = exercises.find(function(e) { return e.id === id; });
+        if (!ex) return;
+        editingId = id;
+        $('#exercise-name').val(ex.name);
+        $('#exercise-sets').val(ex.sets);
+        $('#exercise-reps').val(ex.reps);
+        $('#exercise-weight').val(ex.weight);
+        $('#exercise-date').val(ex.date);
+        $('#add-exercise-btn').text('Update Exercise');
     });
 
     renderExercises();
